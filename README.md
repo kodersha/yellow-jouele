@@ -12,11 +12,15 @@ To uninstall delete all plugin file.
 ## How use?
 Create a `[jouele]` shortcut.
 
+
 The following arguments available:
+
 `PATTERN` - file name as regular expression.
+
 `STYLE` - player style.
 
 **Example**:
+
 `[jouele playlist5.*mp3]`
 
 **Files**:
@@ -30,6 +34,7 @@ playlist5.song-three-name.mp3
 Edit your `config.ini` for custom settings:
 
 `joueleStyle: jouele-skin-dark` - custom skin for jouele.
+
 `JoueleDir: media/audio` - path to your audio folder.
 
 ## Used
