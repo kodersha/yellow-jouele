@@ -26,6 +26,7 @@ Example
 -------
 Your can use:
 
+    [jouele simple-song.mp3 jouele-skin-dark]
     [jouele simple-song.mp3]
     [jouele playlist.*mp3]
 
