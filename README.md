@@ -15,12 +15,10 @@ Required
 
 How use?
 --------
-Create a `[jouele]` shortcut.
+Create a `[jouele]` shortcut. The following arguments available:
 
-The following arguments available:
-
-`PATTERN` = file name as regular expression
-`STYLE` = player style
+- `PATTERN` - file name as regular expression
+- `STYLE` - player style
 
 Example
 -------
@@ -31,19 +29,17 @@ Your can use:
 
 Files on your `media/audio` folder:
 
-```
-simple-song.mp3
-playlist.song-one-name.mp3
-playlist.song-two-name.mp3
-playlist.song-three-name.mp3
-```
+    simple-song.mp3
+    playlist.song-one-name.mp3
+    playlist.song-two-name.mp3
+    playlist.song-three-name.mp3
 
 Configuration
 -------------
 Edit Yellow `config.ini` for custom settings:
 
-`joueleStyle: jouele-skin-dark` = custom skin for jouele
-`JoueleDir: media/audio` = path to your audio folder
+- `joueleStyle: jouele-skin-dark` - custom skin for jouele
+- `JoueleDir: media/audio` - path to your audio folder
 
 Used
 -------
