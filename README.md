@@ -2,6 +2,8 @@ Jouele plugin
 =============
 Jouele for Yellow CMS - Is a simple and beautiful audio player for Yellow CMS.
 
+![Jouele for Yellow CMS](https://raw.githubusercontent.com/sashatravkina/yellow-plugin-jouele/master/screenshot.png)
+
 Install
 -------
 1. Download and install [Yellow](https://github.com/datenstrom/yellow/).
