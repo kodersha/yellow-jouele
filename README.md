@@ -7,21 +7,20 @@ Jouele for Yellow CMS - Is a simple and beautiful audio player for Yellow CMS.
 To uninstall delete all plugin file.
 
 ## Required
-[jQuery](https://jquery.com) library.
+[jQuery](https://jquery.com) library
 
 ## How use?
 Create a `[jouele]` shortcut.
 
-
 The following arguments available:
 
-`PATTERN` - file name as regular expression.
+`PATTERN` - file name as regular expression
+`STYLE` - player style
 
-`STYLE` - player style.
+## Example
 
-**Example**:
-
-`[jouele playlist5.*mp3]`
+`[jouele simple-song.mp3]`
+`[jouele playlist.*mp3]`
 
 **Files**:
 ```
@@ -33,9 +32,8 @@ playlist5.song-three-name.mp3
 ## Configuration
 Edit your `config.ini` for custom settings:
 
-`joueleStyle: jouele-skin-dark` - custom skin for jouele.
-
-`JoueleDir: media/audio` - path to your audio folder.
+`joueleStyle: jouele-skin-dark` - custom skin for jouele
+`JoueleDir: media/audio` - path to your audio folder
 
 ## Used
 * **[Jouele](https://ilyabirman.net/projects/jouele/)** - Audio player by *Ilya Birman*.
