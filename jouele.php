@@ -1,5 +1,5 @@
 <?php
-// Jouele extension, https://github.com/kodersha/yellow-plugin-jouele
+// Jouele extension, https://github.com/kodersha/yellow-jouele
 
 class YellowJouele {
     const VERSION = "0.8.22";
@@ -8,7 +8,7 @@ class YellowJouele {
     // Handle initialisation
     public function onLoad($yellow) {
         $this->yellow = $yellow;
-        $this->yellow->system->setDefault("joueleStyle", "");
+        $this->yellow->system->setDefault("JoueleStyle", "");
     }
     
     // Handle page content of shortcut
@@ -25,8 +25,8 @@ class YellowJouele {
             }
             if (!is_array_empty($files)) {
                 $page->setLastModified($files->getModified());
-                $style = $this->yellow->system->get("joueleStyle");
-                $output = '<p class="jouele-playlist '.htmlspecialchars($style).'">';
+                $jouelestyle = $this->yellow->system->get("joueleStyle");
+                $output = '<p class="jouele-playlist '.htmlspecialchars($jouelestyle).' '.htmlspecialchars($style).'">';
                     foreach ($files as $file) {
                         $tags = jouele_get_tags($file->fileName);
                         $output .= '<a href="'.htmlspecialchars($file->getLocation()).'" class="jouele" data-length="'.$tags['formatted_time'].'" data-space-control="true">'.$tags["artist"].' - '.$tags["title"].'</a>';
@@ -55,19 +55,20 @@ function jouele_get_tags($file) {
 	$id3_tags = array();
 	$versions = array("00" => "2.5", "01" => "x", "10" => "2", "11" => "1");
 	$layers = array("00" => "x", "01" => "3", "10" => "2", "11" => "1");
+	$total_size = 0;
 	$bitrates = array(
-		'V1L1'=>array(0,32,64,96,128,160,192,224,256,288,320,352,384,416,448),
-        'V1L2'=>array(0,32,48,56, 64, 80, 96,112,128,160,192,224,256,320,384),
-        'V1L3'=>array(0,32,40,48, 56, 64, 80, 96,112,128,160,192,224,256,320),
-        'V2L1'=>array(0,32,48,56, 64, 80, 96,112,128,144,160,176,192,224,256),
-        'V2L2'=>array(0, 8,16,24, 32, 40, 48, 56, 64, 80, 96,112,128,144,160),
-        'V2L3'=>array(0, 8,16,24, 32, 40, 48, 56, 64, 80, 96,112,128,144,160),
-        );  
+		'V1L1' => array(0, 32, 64, 96, 128, 160, 192, 224, 256, 288, 320, 352, 384, 416, 448),
+        'V1L2' => array(0, 32, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320, 384),
+        'V1L3' => array(0, 32, 40, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320),
+        'V2L1' => array(0, 32, 48, 56, 64, 80, 96, 112, 128, 144, 160, 176, 192, 224, 256),
+        'V2L2' => array(0, 8, 16, 24, 32, 40, 48, 56, 64, 80, 96, 112, 128, 144, 160),
+        'V2L3' => array(0, 8, 16, 24, 32, 40, 48, 56, 64, 80, 96, 112, 128, 144, 160),
+    );  
     $sample_rates = array(
-			'1'   => array(44100,48000,32000),
-            '2'   => array(22050,24000,16000),
-            '2.5' => array(11025,12000, 8000),
-        );
+        '1' => array(44100, 48000, 32000),
+        '2' => array(22050, 24000, 16000),
+        '2.5' => array(11025, 12000, 8000),
+    );
 	
 	$handle = fopen($file, "r+");
 	 
@@ -76,11 +77,11 @@ function jouele_get_tags($file) {
 		$null = chr(0);
 		$data = fread($handle, 10);
 		if (substr($data,0,3) == 'ID3') {
-			$id3_major_version = hexdec(bin2hex(substr($data,3,1)));
+			$id3_major_version = hexdec(bin2hex(substr($data, 3, 1)));
 			if ($id3_major_version >= 3)
 				$tags_array = array('TIT2' => 'title', 'TALB' => 'album', 'TPE1' => 'artist', 'TYER' => 'year', 'COMM' => 'comment', 'TCON' => 'genre', 'TLEN' => 'length');
 			else 
-				$tags_array = array('TT2' => 'title', 'TAL' => 'album', 'TP1' => 'artist', 'TYE' => 'year', 'COM' => 'comment', 'TCO' => 'genre', 'TLE' => 'length');			
+				$tags_array = array('TT2' => 'title', 'TAL' => 'album', 'TP1' => 'artist', 'TYE' => 'year', 'COM' => 'comment', 'TCO' => 'genre', 'TLE' => 'length' );			
 			$id3_tags["id3_tag_version"] = "2.".$id3_major_version;
 			$id3_revision = hexdec(bin2hex(substr($data,4,1)));
 			$id3_flags = decbin(ord(substr($data,5,1)));
@@ -150,20 +151,20 @@ function jouele_get_tags($file) {
 			$id3_tags["genre"] = ord(trim(substr($data, 127, 1)));
 		}
 	}
+
 	fclose($handle);
 	return($id3_tags);
 }
 
 function jouele_get_genre_name($genre_id) {
-	$genre_names = array("Blues", "Classic Rock", "Country", "Dance", "Disco", "Funk", "Grunge", "Hip-Hop", "Jazz", "Metal", "New Age", "Oldies", "Other", "Pop", "R&B", "Rap", "Reggae", "Rock", "Techno", "Industrial", "Alternative", "Ska", "Death Metal", "Pranks", "Soundtrack", "Euro-Techno", "Ambient", "Trip-Hop", "Vocal", "Jazz+Funk", "Fusion", "Trance", "Classical", "Instrumental", "Acid", "House", "Game", "Sound Clip", "Gospel", "Noise", "Alt. Rock", "Bass", "Soul", "Punk", "Space", "Meditative", "Instrumental Pop", "Instrumental Rock", "Ethnic", "Gothic", "Darkwave", "Techno-Industrial", "Electronic", "Pop-Folk", "Eurodance", "Dream", "Southern Rock", "Comedy", "Cult", "Gangsta Rap", "Top 40", "Christian Rap", "Pop/Funk", "Jungle", "Native American", "Cabaret", "New Wave", "Psychedelic", "Rave", "Showtunes", "Trailer", "Lo-Fi", "Tribal", "Acid Punk", "Acid Jazz", "Polka", "Retro", "Musical", "Rock & Roll", "Hard Rock", "Folk", "Folk-Rock", "National Folk", "Swing", "Fast-Fusion", "Bebop", "Latin", "Revival", "Celtic", "Bluegrass", "Avantgarde", "Gothic Rock", "Progressive Rock", "Psychedelic Rock", "Symphonic Rock", "Slow Rock", "Big Band", "Chorus", "Easy Listening", "Acoustic", "Humour", "Speech", "Chanson", "Opera", "Chamber Music", "Sonata", "Symphony", "Booty Bass", "Primus", "Porn Groove", "Satire", "Slow Jam", "Club", "Tango", "Samba", "Folklore", "Ballad", "Power Ballad", "Rhythmic Soul", "Freestyle", "Duet", "Punk Rock", "Drum Solo", "A Cappella", "Euro-House", "Dance Hall", "Goa", "Drum & Bass", "Club-House", "Hardcore", "Terror", "Indie", "BritPop", "Afro-Punk", "Polsk Punk", "Beat", "Christian Gangsta Rap", "Heavy Metal", "Black Metal", "Crossover", "Contemporary Christian", "Christian Rock", "Merengue", "Salsa", "Thrash Metal", "Anime", "JPop", "Synthpop", "Abstract", "Art Rock", "Baroque", "Bhangra", "Big Beat", "Breakbeat", "Chillout", "Downtempo", "Dub", "EBM", "Eclectic", "Electro", "Electroclash", "Emo", "Experimental", "Garage", "Global", "IDM", "Illbient", "Industro-Goth", "Jam Band", "Krautrock", "Leftfield", "Lounge", "Math Rock", "New Romantic", "Nu-Breakz", "Post-Punk", "Post-Rock", "Psytrance", "Shoegaze", "Space Rock", "Trop Rock", "World Music", "Neoclassical", "Jouelebook", "Jouele Theatre", "Neue Deutsche Welle", "Podcast", "Indie Rock", "G-Funk", "Dubstep", "Garage Rock", "Psybient");
+	$genre_names = array("Blues", "Classic Rock", "Country", "Dance", "Disco", "Funk", "Grunge", "Hip-Hop", "Jazz", "Metal", "New Age", "Oldies", "Other", "Pop", "R&B", "Rap", "Reggae", "Rock", "Techno", "Industrial", "Alternative", "Ska", "Death Metal", "Pranks", "Soundtrack", "Euro-Techno", "Ambient", "Trip-Hop", "Vocal", "Jazz+Funk", "Fusion", "Trance", "Classical", "Instrumental", "Acid", "House", "Game", "Sound Clip", "Gospel", "Noise", "Alt. Rock", "Bass", "Soul", "Punk", "Space", "Meditative", "Instrumental Pop", "Instrumental Rock", "Ethnic", "Gothic", "Darkwave", "Techno-Industrial", "Electronic", "Pop-Folk", "Eurodance", "Dream", "Southern Rock", "Comedy", "Cult", "Gangsta Rap", "Top 40", "Christian Rap", "Pop/Funk", "Jungle", "Native American", "Cabaret", "New Wave", "Psychedelic", "Rave", "Showtunes", "Trailer", "Lo-Fi", "Tribal", "Acid Punk", "Acid Jazz", "Polka", "Retro", "Musical", "Rock & Roll", "Hard Rock", "Folk", "Folk-Rock", "National Folk", "Swing", "Fast-Fusion", "Bebop", "Latin", "Revival", "Celtic", "Bluegrass", "Avantgarde", "Gothic Rock", "Progressive Rock", "Psychedelic Rock", "Symphonic Rock", "Slow Rock", "Big Band", "Chorus", "Easy Listening", "Acoustic", "Humour", "Speech", "Chanson", "Opera", "Chamber Music", "Sonata", "Symphony", "Booty Bass", "Primus", "Porn Groove", "Satire", "Slow Jam", "Club", "Tango", "Samba", "Folklore", "Ballad", "Power Ballad", "Rhythmic Soul", "Freestyle", "Duet", "Punk Rock", "Drum Solo", "A Cappella", "Euro-House", "Dance Hall", "Goa", "Drum & Bass", "Club-House", "Hardcore", "Terror", "Indie", "BritPop", "Afro-Punk", "Polsk Punk", "Beat", "Christian Gangsta Rap", "Heavy Metal", "Black Metal", "Crossover", "Contemporary Christian", "Christian Rock", "Merengue", "Salsa", "Thrash Metal", "Anime", "JPop", "Synthpop", "Abstract", "Art Rock", "Baroque", "Bhangra", "Big Beat", "Breakbeat", "Chillout", "Downtempo", "Dub", "EBM", "Eclectic", "Electro", "Electroclash", "Emo", "Experimental", "Garage", "Global", "IDM", "Illbient", "Industro-Goth", "Jam Band", "Krautrock", "Leftfield", "Lounge", "Math Rock", "New Romantic", "Nu-Breakz", "Post-Punk", "Post-Rock", "Psytrance", "Shoegaze", "Space Rock", "Trop Rock", "World Music", "Neoclassical", "Audiobook", "Audio Theatre", "Neue Deutsche Welle", "Podcast", "Indie Rock", "G-Funk", "Dubstep", "Garage Rock", "Psybient");
 	$genres = explode(")", $genre_id);
 	$n = 1;
 	foreach($genres as $genre_num) { 
 			$genre_num = str_replace("(", "", str_replace(")", "", $genre_num));
 			if ($n > 1 && !empty($genre_num))
 				$genre_string .= ",";
-			if (is_numeric($genre_num))
-			{
+			if (is_numeric($genre_num)) {
 				if ($genre_num >= 0 && $genre_num <= 191)
 					$genre_string .= $genre_names[$genre_num];
 				else
