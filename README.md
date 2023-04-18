@@ -2,12 +2,12 @@ Jouele plugin
 =============
 Jouele for Yellow CMS - Is a simple and beautiful audio player for Yellow CMS.
 
-![Jouele for Yellow CMS](https://raw.githubusercontent.com/sashatravkina/yellow-plugin-jouele/master/screenshot.png)
+![Jouele for Yellow CMS](https://raw.githubusercontent.com/kodersha/yellow-plugin-jouele/master/screenshot.png)
 
 Install
 -------
 1. Download and install [Yellow](https://github.com/datenstrom/yellow/).
-2. Download [this plugin](https://github.com/sashatravkina/yellow-plugin-jouele/archive/master.zip), unpack he into your system/plugins folder.
+2. Download [this plugin](https://github.com/kodersha/yellow-plugin-jouele/archive/master.zip), unpack he into your `system` folder.
 
 To uninstall delete all plugin files.
 
@@ -17,7 +17,7 @@ Required
 
 How use?
 --------
-Create a `[jouele]` shortcut. The following arguments available:
+Make a `[jouele]` shortcut. The following arguments available:
 
 - `PATTERN` - file name as regular expression
 - `STYLE` - player style
@@ -30,7 +30,7 @@ Your can use:
     [jouele simple-song.mp3]
     [jouele playlist.*mp3]
 
-Files on your `media/audio` folder:
+Files on your `media/downloads` folder:
 
     simple-song.mp3
     playlist.song-one-name.mp3
@@ -41,8 +41,7 @@ Configuration
 -------------
 Edit Yellow `config.ini` for custom settings:
 
-- `joueleStyle: jouele-skin-dark` - custom skin for jouele
-- `JoueleDir: media/audio` - path to your audio folder
+- `JoueleStyle: jouele-skin-dark` - custom skin class for Jouele
 
 Used
 -------
