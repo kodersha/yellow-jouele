@@ -19,7 +19,7 @@ How use?
 --------
 Make a `[jouele]` shortcut. The following arguments available:
 
-- `FILENAME` or file `PATTERN` - file name as regular expression.
+- `FILENAME` or files `PATTERN`.
 - `STYLE` - player style or `jouele-playlist` class for autoplay next tracks, if pattern list used. 
 - `NAME` - rename one track, **if pattern unused**.
 
