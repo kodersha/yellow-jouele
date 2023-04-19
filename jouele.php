@@ -14,8 +14,9 @@ class YellowJouele {
     // Handle page content of shortcut
     public function onParseContentShortcut($page, $name, $text, $type) {
         $output = null;
-        if ($name=="jouele" && ($type=="block" || $type=="inline")) {
-            list($pattern, $style) = $this->yellow->toolbox->getTextArguments($text);
+        if ($name=="jouele" && ($type=="inline" || $type=="block")) {
+            list($pattern, $style, $caption) = $this->yellow->toolbox->getTextArguments($text);
+
             if (is_string_empty($pattern)) {
                 $pattern = "unknown";
                 $files = $this->yellow->media->clean();
@@ -23,15 +24,26 @@ class YellowJouele {
                 $joueles = $this->yellow->system->get("coreDownloadLocation");
                 $files = $this->yellow->media->index(true, true)->match("#$joueles$pattern#");
             }
+
             if (!is_array_empty($files)) {
                 $page->setLastModified($files->getModified());
                 $jouelestyle = $this->yellow->system->get("joueleStyle");
-                $output = '<p class="jouele-playlist '.htmlspecialchars($jouelestyle).' '.htmlspecialchars($style).'">';
-                    foreach ($files as $file) {
-                        $tags = jouele_get_tags($file->fileName);
-                        $output .= '<a href="'.htmlspecialchars($file->getLocation()).'" class="jouele" data-length="'.$tags['formatted_time'].'" data-space-control="true">'.$tags["artist"].' - '.$tags["title"].'</a>';
-                    }
-                $output .= '</p>';
+				if (empty($style)) {
+                	$output = '<div class="jouele-player '.htmlspecialchars($jouelestyle).'">';
+				} else {
+					$output = '<div class="jouele-player '.htmlspecialchars($jouelestyle).' '.htmlspecialchars($style).'">';
+				}
+				foreach ($files as $file) {
+					$tags = jouele_get_tags($file->fileName);
+					$output .= '<a href="'.htmlspecialchars($file->getLocation()).'" class="jouele" data-length="'.$tags['formatted_time'].'" data-space-control="true">';
+						if (empty($caption)) {
+							$output .= $tags["artist"].' - '.$tags["title"];
+						} else {
+							$output .= htmlspecialchars($caption);
+						}
+					$output .= '</a>';
+				}
+                $output .= '</div>';
             } else {
                 $page->error(500, "Jouele '$pattern' does not exist!");
             }

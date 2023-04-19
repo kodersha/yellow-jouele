@@ -19,16 +19,40 @@ How use?
 --------
 Make a `[jouele]` shortcut. The following arguments available:
 
-- `PATTERN` - file name as regular expression
-- `STYLE` - player style
+- `FILENAME` or file `PATTERN` - file name as regular expression.
+- `STYLE` - player style or `jouele-playlist` class for autoplay next tracks, if pattern list used. 
+- `NAME` - rename one track, **if pattern unused**.
 
-Example
+Examples
+--------
+Single use:
+
+```
+[jouele track.mp3 "class" "Artist - Track"]
+```
+
+Pattern use:
+
+```
+[jouele track-.*.mp3 "class"]
+```
+
+Renamed track with autoplay next track playlist:
+
+```
+! {.jouele-playlist}
+!
+! [jouele track-1.mp3 "" "Artist - Track"]
+!
+! [jouele track-2.mp3 "" "Artist - Track"]
+```
+
+More examples
 -------
 Your can use:
 
-    [jouele simple-song.mp3 jouele-skin-dark]
     [jouele simple-song.mp3]
-    [jouele playlist.*mp3]
+    [jouele playlist.*.mp3 "jouele-playlist"]
 
 Files on your `media/downloads` folder:
 
@@ -42,6 +66,10 @@ Configuration
 Edit Yellow `config.ini` for custom settings:
 
 - `JoueleStyle: jouele-skin-dark` - custom skin class for Jouele
+
+Known Issues
+------------
+Cyrillic track ID3 names unsupported. :(
 
 Used
 -------
