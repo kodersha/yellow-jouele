@@ -19,32 +19,32 @@ How use?
 Make a `[jouele]` shortcut. The following arguments available:
 
 - `FILENAME` or files `PATTERN`.
-- `STYLE` - player style or `jouele-playlist` class for autoplay next tracks, if pattern list used. 
+- `STYLE` - your custom player style. 
 
 Examples
 --------
 Single use:
 
 ```
-[jouele track.mp3 "class"]
+[jouele track.mp3]
 ```
 
 Pattern use:
 
 ```
-[jouele track-.*.mp3 "class"]
+[jouele track-.*.mp3]
 ```
 
 More examples
 -------
 Your can use:
 
-    [jouele simple-song.mp3]
+    [jouele artist---track.mp3]
     [jouele playlist.*.mp3]
 
 Files on your `media/downloads` folder:
 
-    simple-song.mp3
+    artist---track.mp3
     playlist.song-one-name.mp3
     playlist.song-two-name.mp3
     playlist.song-three-name.mp3
@@ -53,7 +53,7 @@ Configuration
 -------------
 Edit Yellow `config.ini` for custom settings:
 
-- `JoueleStyle: jouele-skin-dark` - custom skin class for Jouele
+- `JoueleStyle: jouele-skin-dark` - custom skin class for Jouele.
 
 Known Issues
 ------------
