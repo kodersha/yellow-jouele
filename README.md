@@ -20,14 +20,13 @@ Make a `[jouele]` shortcut. The following arguments available:
 
 - `FILENAME` or files `PATTERN`.
 - `STYLE` - player style or `jouele-playlist` class for autoplay next tracks, if pattern list used. 
-- `NAME` - rename one track, **if pattern unused**.
 
 Examples
 --------
 Single use:
 
 ```
-[jouele track.mp3 "class" "Artist - Track"]
+[jouele track.mp3 "class"]
 ```
 
 Pattern use:
@@ -36,22 +35,12 @@ Pattern use:
 [jouele track-.*.mp3 "class"]
 ```
 
-Renamed track with autoplay next track playlist:
-
-```
-! {.jouele-playlist}
-!
-! [jouele track-1.mp3 "" "Artist - Track"]
-!
-! [jouele track-2.mp3 "" "Artist - Track"]
-```
-
 More examples
 -------
 Your can use:
 
     [jouele simple-song.mp3]
-    [jouele playlist.*.mp3 "jouele-playlist"]
+    [jouele playlist.*.mp3]
 
 Files on your `media/downloads` folder:
 
@@ -73,4 +62,3 @@ Cyrillic track ID3 names unsupported. :(
 Used
 -------
 * **[Jouele](https://ilyabirman.net/projects/jouele/)** - Audio player by *Ilya Birman*.
-* **[mp3_get_tags](http://www.seabreezecomputers.com/tips/mp3_id3_tag.htm)** - Read the ID3 tag from MP3 files by *Jeff Baker*.
