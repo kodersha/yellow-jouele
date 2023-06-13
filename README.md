@@ -39,15 +39,15 @@ More examples
 -------
 Your can use:
 
-    [jouele artist---track.mp3]
-    [jouele playlist.*.mp3]
+    [jouele single---track.mp3]
+    [jouele artist-name-.*.mp3]
 
 Files on your `media/downloads` folder:
 
-    artist---track.mp3
-    playlist.song-one-name.mp3
-    playlist.song-two-name.mp3
-    playlist.song-three-name.mp3
+    single---track.mp3
+    artist-name---track-one.mp3
+    artist-name---track-two.mp3
+    artist-name---track-three.mp3
 
 Configuration
 -------------
