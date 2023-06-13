@@ -2,7 +2,7 @@
 
 class YellowJouele {
     const VERSION = "0.8.22";
-    public $yellow;         // доступ к API
+    public $yellow; // доступ к API
 
     // Обработать инициализацию
     public function onLoad($yellow) {
@@ -27,37 +27,40 @@ class YellowJouele {
 			if (!empty($files)) {
 				$page->setLastModified($files->getModified());
 				$joueleStyle = $this->yellow->system->get("joueleStyle");
-		
-				$playlistClass = count($files) == 1 ? '' : 'jouele-playlist';
-				$output = '<div class="jouele-player '.$playlistClass.' '.htmlspecialchars($style).'">';
+				
+				$playlistClass = count($files) > 1 ? 'jouele-playlist' : '';
+				
+				$output = '';
 				foreach ($files as $file) {
 					// Получить теги ID3 из аудиофайла
 					$id3 = $this->getID3($file->fileName);
-		
+				
 					// Разбиваем название на исполнителя и название трека на основе "---"
 					$titleParts = explode('---', pathinfo($file->getLocation(), PATHINFO_FILENAME));
 					$artist = trim($titleParts[0]);
 					$title = trim($titleParts[1]);
-		
+				
 					// Заменяем тире между словами на пробелы в названии трека и имени исполнителя
 					$patterns = array('/(?<=\w)-(?=\w)/u', '/-{2,}/');
 					$replacements = array(' ', ' ');
-		
+				
 					$artist = preg_replace($patterns, $replacements, $artist);
 					$title = preg_replace($patterns, $replacements, $title);
-		
-					$output .= '<a href="'.htmlspecialchars($file->getLocation()).'" class="jouele '.htmlspecialchars($joueleStyle).' '.htmlspecialchars($style).'" data-length="" data-space-control="true">';
-		
+				
+					$output .= '<a href="'.htmlspecialchars($file->getLocation()).'" class="jouele '.htmlspecialchars($joueleStyle).'" data-length="" data-space-control="true">';
+				
 					// Если тег заголовка и артиста не пустой, выводим артиста и заголовок, иначе выводим название файла
 					if (!empty($id3['artist']) && !empty($id3['title'])) {
 						$output .= htmlspecialchars($id3['artist']).' - '.htmlspecialchars($id3['title']);
 					} else {
 						$output .= mb_convert_case(htmlspecialchars($artist), MB_CASE_TITLE, "UTF-8") . ' - ' . mb_convert_case(htmlspecialchars($title), MB_CASE_TITLE, "UTF-8");
 					}
-		
+				
 					$output .= '</a>';
 				}
-				$output .= '</div>';
+				if (!empty($output)) {
+					$output = '<div class="jouele-player '.$playlistClass.' '.htmlspecialchars($style).'">' . $output . '</div>';
+				}
 			} else {
 				$page->error(500, "Jouele '$pattern' does not exist!");
 			}
