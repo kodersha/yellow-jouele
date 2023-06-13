@@ -57,7 +57,7 @@ Edit Yellow `config.ini` for custom settings:
 
 Known Issues
 ------------
-Cyrillic track ID3 names unsupported. :(
+Cyrillic ID3 tags and track names unsupported. :(
 
 Used
 -------
